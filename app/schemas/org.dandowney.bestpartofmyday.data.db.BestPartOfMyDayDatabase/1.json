@@ -1,0 +1,270 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "489c2548b0549cb1e897c4610e710f83",
+    "entities": [
+      {
+        "tableName": "color",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`color_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `value` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "colorId",
+            "columnName": "color_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "color_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_color_value",
+            "unique": true,
+            "columnNames": [
+              "value"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_color_value` ON `${TABLE_NAME}` (`value`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "day_summary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`day_summary_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `color` INTEGER NOT NULL, `date` INTEGER NOT NULL, `best_part` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "daySummaryId",
+            "columnName": "day_summary_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bestPart",
+            "columnName": "best_part",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "day_summary_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_day_summary_date",
+            "unique": true,
+            "columnNames": [
+              "date"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_day_summary_date` ON `${TABLE_NAME}` (`date`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mood_palette",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mood_palette_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `is_active` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "moodPaletteId",
+            "columnName": "mood_palette_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "is_active",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "mood_palette_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mood_tag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mood_tag_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `color_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `archived` INTEGER NOT NULL, FOREIGN KEY(`color_id`) REFERENCES `color`(`color_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "moodTagId",
+            "columnName": "mood_tag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorId",
+            "columnName": "color_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "archived",
+            "columnName": "archived",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "mood_tag_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mood_tag_color_id",
+            "unique": false,
+            "columnNames": [
+              "color_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mood_tag_color_id` ON `${TABLE_NAME}` (`color_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "color",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "color_id"
+            ],
+            "referencedColumns": [
+              "color_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "day_summary_mood_tag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`day_summary_id` INTEGER NOT NULL, `mood_tag_id` INTEGER NOT NULL, PRIMARY KEY(`day_summary_id`, `mood_tag_id`))",
+        "fields": [
+          {
+            "fieldPath": "daySummaryId",
+            "columnName": "day_summary_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "moodTagId",
+            "columnName": "mood_tag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "day_summary_id",
+            "mood_tag_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_day_summary_mood_tag_mood_tag_id",
+            "unique": false,
+            "columnNames": [
+              "mood_tag_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_day_summary_mood_tag_mood_tag_id` ON `${TABLE_NAME}` (`mood_tag_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mood_palette_color",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mood_palette_id` INTEGER NOT NULL, `color_id` INTEGER NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`mood_palette_id`, `color_id`))",
+        "fields": [
+          {
+            "fieldPath": "moodPaletteId",
+            "columnName": "mood_palette_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorId",
+            "columnName": "color_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mood_palette_id",
+            "color_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mood_palette_color_color_id",
+            "unique": false,
+            "columnNames": [
+              "color_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mood_palette_color_color_id` ON `${TABLE_NAME}` (`color_id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '489c2548b0549cb1e897c4610e710f83')"
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+buildscript {
+    ext {
+        versions = [
+                // Source dependencies
+                "appCompat": "1.6.1",
+                "constraintLayout": "2.1.4",
+                "coroutines": "1.6.4",
+                "firebaseBom": "28.3.1",
+                "dagger": '2.43.2',
+                "dagger_hilt_work": "1.0.0",
+                "dagger_hilt_compiler": "1.0.0-beta01",
+                "gson": "2.9.0",
+                "kotlin": "1.8.10",
+                "lifecycleRuntime": "2.6.1",
+                "material": "1.8.0",
+                "okhttp": "4.9.3",
+                "retrofit": "2.6.0",
+                "room": "2.5.1",
+                "coil": "2.1.0",
+                "datastore": "1.0.0",
+
+                // Compose
+                "compose": "1.4.0",
+                "composeMaterial": "1.4.0",
+                "composeFoundation": "1.4.0",
+                "composeViewModel": "2.6.1",
+                "composeActivity": "1.7.0",
+                "composeNavigation": "2.5.3",
+                "composeHilt": "1.0.0",
+                "composeConstraintLayout": "1.0.1",
+
+                // Test dependencies
+                "espresso": "3.5.1",
+                "junit": "4.13.2",
+                "junitUi": "1.0.4",
+                "mockk": "1.11.0",
+                "runner": "1.5.2",
+                "truth": "0.39",
+                "junitAndroid": "1.1.5"
+        ]
+    }
+    dependencies {
+
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.43.2"
+    }
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+}
